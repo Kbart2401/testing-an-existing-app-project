@@ -1,4 +1,4 @@
-const { expect } = require('chai');
+const { expect, assert } = require('chai');
 const { mergeCategories } = require('../merge-categories');
 
 describe("mergeCategories()", () => {
@@ -12,6 +12,16 @@ describe("mergeCategories()", () => {
     `;
 
     it("should return no <li>s for no categories", () => {
+      const noCategories = [];
+      mergeCategories(template, noCategories, 'li')
+      expect(template).to.include('<div>')
+      expect(template).to.include('</div>')
+      expect(template).to.include('<ul>')
+      expect(template).to.include('</ul>')
+      
+      expect(template).to.not.include('<li>')
+      expect(template).to.not.include('</li>')
+      expect(template).to.not.include('<!--Content here -->')
     });
 
     it("should return a single <li> for one category", () => {
