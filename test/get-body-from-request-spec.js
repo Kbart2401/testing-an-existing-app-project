@@ -1,6 +1,7 @@
 const EventEmitter = require('events');
 const { expect } = require('chai');
 const { getBodyFromRequest } = require('../get-body-from-request');
+const { get } = require('http');
 describe("The getBodyFromRequest function", () => {
   let fakeReq = null;
 
@@ -20,6 +21,20 @@ describe("The getBodyFromRequest function", () => {
   });
 
   it('returns the data read from the stream', done => {
-    expect.fail('please write this test');
+    const bodyPromise = getBodyFromRequest(fakeReq);
+    const data1 = "This is some";
+    const data2 = " data from the browser";
+
+    fakeReq.emit("data", data1);
+    fakeReq.emit("data", data2);
+
+    fakeReq.emit("end");
+
+    bodyPromise
+      .then(body => {
+        expect(body).to.equal(data1 + data2)
+      })
+      .then(done)
+      .catch(body => done(`Failed. Got "${body}"`))
   });
 });

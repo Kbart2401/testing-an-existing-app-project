@@ -8,14 +8,11 @@ describe("The getValueFromBody function", () => {
     const key = "notThere";
 
     // Act
-    // Write code to invoke getValueFromBody and collect
-    // the result
+    const result = getValueFromBody(body, key)
 
 
     // Assert
-    // Replace the fail line with an assertion for the
-    // expected value of ""
-    expect.fail('please write this test');
+    expect(result).to.equal("")
   });
 
   it('returns an empty string for a body without the key', () => {
